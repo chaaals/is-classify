@@ -4,7 +4,7 @@ from random import randint
 # read command line args
 from sys import argv
 
-def generate_dataset(fake: Faker, length: int = 25) -> None:
+def generate_dataset(fake: Faker, length: int) -> None:
     """
     generate dataset composed of name, email, date, and phone number based on length passed
     """
