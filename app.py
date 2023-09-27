@@ -7,3 +7,4 @@ if __name__ == '__main__':
 
     classify = Classify(DATA_DIR)
     print(classify.get_raw_data())
+    print(classify.get_redundant_data())
