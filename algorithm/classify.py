@@ -8,6 +8,8 @@ class Classify:
         # checks if the path exists before reading data sets
         if(os.path.exists(dir)):
             self.read_data_sets()
+        else:
+            raise ValueError('Argument must be a valid directory.')
 
     def read_data_sets(self):
         """
