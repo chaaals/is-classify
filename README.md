@@ -16,5 +16,6 @@ Classification Algorithm
 3. Activate your virtual environment `./.env/Scripts/activate.bat`
 4. Install dependencies `python -m pip install -r requirements.txt`
 5. To run unit tests, use this command `python -m unittest -v ./tests/classify.py`
+6. To generate data, use this command `python generate_dataset.py --length 25 --count 5`
 
 Note: Don't forget to deactive your virtual environment afterwards.
