@@ -11,6 +11,10 @@ Classification Algorithm
 
 ## Instructions
 
-1. Create a virtual environment. `python -m venv .env`
-2. Install dependencies `python -m pip install -r requirements.txt`
-3. Run unit tests using this command `python -m unittest -v ./tests/classify.py`
+1. Clone the repository.
+2. Create a virtual environment. `python -m venv .env`
+3. Activate your virtual environment `./.env/Scripts/activate.bat`
+4. Install dependencies `python -m pip install -r requirements.txt`
+5. To run unit tests, use this command `python -m unittest -v ./tests/classify.py`
+
+Note: Don't forget to deactive your virtual environment afterwards.
