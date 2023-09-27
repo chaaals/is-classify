@@ -66,7 +66,6 @@ def parse_args(argv: list[str] = None) -> tuple[int, int]:
 
 # python convention to differentiante runnable scripts with libraries
 if __name__ == "__main__":
-    int_list = [1,2,3,4]
     # don't include the first argument which is always the script's filename
     length, count = parse_args(argv[1:])
 
