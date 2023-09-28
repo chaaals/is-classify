@@ -1,9 +1,9 @@
 import unittest
-import os
+from pathlib import Path
 from algorithm.classify import Classify
 
 # generates a path for test data directory
-TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'test_data')
+TEST_DATA_DIR = Path(__file__).parent.joinpath("test_data") # os.path.join(os.path.dirname(__file__), 'test_data')
 classify = Classify(TEST_DATA_DIR)
 
 class ClassifyUnitTest(unittest.TestCase):
@@ -80,7 +80,7 @@ class ClassifyUnitTest(unittest.TestCase):
     # should raise a ValueError when passing an invalid directory
     def test_dir_error(self):
         with self.assertRaises(ValueError):
-            Classify(TEST_DATA_DIR + '/data_set_471.txt')
+            Classify(TEST_DATA_DIR.joinpath('/data_set_471.txt'))
 
 if __name__ == '__main__':
     unittest.main()
