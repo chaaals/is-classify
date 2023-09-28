@@ -7,6 +7,7 @@ TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'test_data')
 classify = Classify(TEST_DATA_DIR)
 
 class ClassifyUnitTest(unittest.TestCase):
+    # should create a list of sets containing clean raw data from txt files
     def test_read_data(self):
         self.assertListEqual(
             classify.get_raw_data(),
@@ -67,6 +68,7 @@ class ClassifyUnitTest(unittest.TestCase):
             }
         ])
 
+    # should count the redundant data in txt file
     def test_redundant_data(self):
         self.assertDictEqual(classify.get_redundant_data(), {
             "+63-9282873428": 1,
@@ -74,6 +76,11 @@ class ClassifyUnitTest(unittest.TestCase):
             "Stephanie Estrada": 1,
             "Destiny Stewart": 1
         })
+
+    # should raise a ValueError when passing an invalid directory
+    def test_dir_error(self):
+        with self.assertRaises(ValueError):
+            Classify(TEST_DATA_DIR + '/data_set_471.txt')
 
 if __name__ == '__main__':
     unittest.main()

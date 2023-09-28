@@ -7,14 +7,15 @@ class Classify:
         self.redundant_data = {}
 
         # checks if the path exists before reading data sets
-        if(os.path.exists(dir)):
-            self.read_data_sets()
+        if(os.path.isdir(dir)):
+            self.__read_data_sets()
         else:
             raise ValueError('Argument must be a valid directory.')
 
-    def read_data_sets(self):
+    def __read_data_sets(self):
         """
-        Read the files and in a given dir and stores the value in a 2D array
+        Read the files and in a given dir and stores the value in a 2D array.
+        Should not be accessible when an instance is created.
         """ 
         files = os.listdir(self.dir)
         
@@ -36,9 +37,7 @@ class Classify:
                         continue
 
                     file_data.add(value)
-
             self.raw_data.append(file_data)
-
         return self
     
     def get_raw_data(self) -> list:
