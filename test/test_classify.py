@@ -3,7 +3,7 @@ from pathlib import Path
 from algorithm.classify import Classify
 
 # generates a path for test data directory
-TEST_DATA_DIR = Path(__file__).parent.joinpath("test_data") # os.path.join(os.path.dirname(__file__), 'test_data')
+TEST_DATA_DIR = Path(__file__).parent.joinpath("test_data")
 classify = Classify(TEST_DATA_DIR)
 
 class ClassifyUnitTest(unittest.TestCase):
