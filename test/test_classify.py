@@ -81,7 +81,7 @@ class ClassifyUnitTest(unittest.TestCase):
                 "2009-03-28",
                 "1991-07-08",
                 "rjohnson@example.com",
-                "Maria Thornton",
+                "Maria Thornton Sam",
                 "1997-07-12",
                 "Destiny Stewart",
                 "2012-01-18",
@@ -147,5 +147,11 @@ class ClassifyUnitTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             Classify(TEST_DATA_DIR.joinpath('/data_set_471.txt'))
 
+    # print out the output of the categorized data
+    def test_print_categorized_data(self):
+        classify.categorize_data()
+        print("Categorized Data:")
+        classify.print_categorized_data()
+        
 if __name__ == '__main__':
     unittest.main()
