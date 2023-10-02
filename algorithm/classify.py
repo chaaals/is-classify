@@ -82,6 +82,8 @@ class Classify:
                     formatted_name = format_name(value)
                     self.categorized_data["name"].add(formatted_name)
 
+        return self
+    
     def get_categorized_data(self):
         """
         Getter function for categorized data
@@ -96,3 +98,5 @@ class Classify:
             print(f"{category}:")
             for value in values:
                 print(f"  {value}")
+
+        return self
