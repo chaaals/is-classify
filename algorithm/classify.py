@@ -34,7 +34,7 @@ class Classify:
                 for line in f:
                     value = line.strip()
 
-                    # counts the number of times the value has occured
+                    # counts the number of times the value has ocurred
                     if value in file_data:
                         if self.redundant_data.get(value) is not None:
                             self.redundant_data[value] += 1
@@ -62,16 +62,22 @@ class Classify:
     def format_name(self, name_str):
         parts = name_str.split()
 
+        # Check if there are at least two parts (first name and last name)
+        if len(parts) >= 2:
+            first_name = parts[0]
+            last_name = parts[-1]  # Use the last part as the last name
+
+
         # Check if there are at least three parts (first, middle, last names)
         if len(parts) >= 3:
-            first_name = parts[0]
             middle_name = parts[1]
-            last_name = parts[2]
             middle_initial = middle_name[0]
             formatted_name = f"{last_name}, {first_name} {middle_initial}."
-            return formatted_name
+        else:
+            formatted_name = f"{last_name}, {first_name}"
 
-        # [FOR REVIEW] If there are only two parts or fewer, return None
+        return formatted_name
+    
         return None
 
 

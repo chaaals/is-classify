@@ -147,11 +147,20 @@ class ClassifyUnitTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             Classify(TEST_DATA_DIR.joinpath('/data_set_471.txt'))
 
-    # print out the output of the categorized data
+    # should print out the categorized data
     def test_print_categorized_data(self):
         classify.categorize_data()
         print("Categorized Data:")
         classify.print_categorized_data()
-        
+
+    # should check out if there are duplicates on the categorized data; another validation
+    def test_no_duplicates_in_categorized_data(self):
+        classify.categorize_data()
+        categorized_data = classify.get_categorized_data()
+
+        # Iterate through each category and check for duplicates
+        for category, values in categorized_data.items():
+            self.assertEqual(len(values), len(set(values)), f"Duplicates found in '{category}' category")
+ 
 if __name__ == '__main__':
     unittest.main()
