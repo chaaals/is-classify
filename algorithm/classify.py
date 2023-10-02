@@ -1,16 +1,17 @@
 from pathlib import Path
 import re
+from utils.utils import format_name
 
 class Classify:
     def __init__(self, dir: Path):
         self.dir = dir
         self.raw_data = [] # array of sets
         self.redundant_data = {}
-        self.categorized_data = { # array of lists for categorize_data
-            "name": [],
-            "birthday": [],
-            "email": [],
-            "cell_no": [],
+        self.categorized_data = { # array of sets for categorize_data
+            "name": set(),
+            "birthday": set(),
+            "email": set(),
+            "cell_no": set(),
         }
 
         # checks if the path exists before reading data sets
@@ -58,28 +59,6 @@ class Classify:
         Getter fn for redundant data
         """
         return self.redundant_data
-    
-    def format_name(self, name_str):
-        parts = name_str.split()
-
-        # Check if there are at least two parts (first name and last name)
-        if len(parts) >= 2:
-            first_name = parts[0]
-            last_name = parts[-1]  # Use the last part as the last name
-
-
-        # Check if there are at least three parts (first, middle, last names)
-        if len(parts) >= 3:
-            middle_name = parts[1]
-            middle_initial = middle_name[0]
-            formatted_name = f"{last_name}, {first_name} {middle_initial}."
-        else:
-            formatted_name = f"{last_name}, {first_name}"
-
-        return formatted_name
-    
-        return None
-
 
     def categorize_data(self):
         """
@@ -93,16 +72,19 @@ class Classify:
 
         for data_set in self.raw_data:
             for value in data_set:
+                value = value.strip()
+                
                 if cell_no_regex.match(value):
-                    self.categorized_data["cell_no"].append(value)
+                    self.categorized_data["cell_no"].add(value)
                 elif birthday_regex.match(value):
-                    self.categorized_data["birthday"].append(value)
+                    self.categorized_data["birthday"].add(value)
                 elif email_regex.match(value):
-                    self.categorized_data["email"].append(value)
+                    self.categorized_data["email"].add(value)
                 else:
-                    formatted_name = self.format_name(value)
+                    formatted_name = format_name(value)
                     if formatted_name is not None:
-                        self.categorized_data["name"].append(formatted_name)
+                        self.categorized_data["name"].add(formatted_name)
+
 
 
     def get_categorized_data(self):
