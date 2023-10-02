@@ -1,6 +1,6 @@
 from pathlib import Path
 import re
-from utils.utils import format_name
+from utils.format_name import format_name
 
 class Classify:
     def __init__(self, dir: Path):
@@ -72,8 +72,6 @@ class Classify:
 
         for data_set in self.raw_data:
             for value in data_set:
-                value = value.strip()
-                
                 if cell_no_regex.match(value):
                     self.categorized_data["cell_no"].add(value)
                 elif birthday_regex.match(value):
@@ -82,10 +80,7 @@ class Classify:
                     self.categorized_data["email"].add(value)
                 else:
                     formatted_name = format_name(value)
-                    if formatted_name is not None:
-                        self.categorized_data["name"].add(formatted_name)
-
-
+                    self.categorized_data["name"].add(formatted_name)
 
     def get_categorized_data(self):
         """

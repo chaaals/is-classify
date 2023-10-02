@@ -1,4 +1,4 @@
-def format_name(name_str):
+def format_name(name_str: str) -> str:
     parts = name_str.split()
 
     # Check if there are at least two parts (first name and last name)
