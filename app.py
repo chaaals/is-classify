@@ -36,10 +36,11 @@ def print_to_terminal(classify: Classify):
     "write_to_file(classify)
 
 def write_to_file(classify: Classify):
-    output_file_path = Path(__file__).parent / 'output.txt'  # Output file path in the same directory as the script
+    output_file_path = Path(__file__).parent / 'output.txt'
     with open(output_file_path, 'w') as output_file:
+        print_to_txt = classify.get_categorized_data() #hopefully gumana gomenasaiiii
         for category, data_set in print_to_txt.items():
-            output_file.write(f"{category}\n")
+            output_file.write(f"{category}:\n")
             for data in data_set:
                 output_file.write(f"     {data}\n")
 
