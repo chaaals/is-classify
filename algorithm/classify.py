@@ -130,23 +130,25 @@ class Classify:
         |___ categorized_database/
             |___DATABASE.txt
         """
-        text_file_path = self.dir / 'categorized_database' / f'DATABASE.txt'
+        # get current datetime for filename and writing timestamp on DATABASE_current_datetime.txt
+        current_datetime = datetime.now()
+        text_file_path = self.dir / 'categorized_database' / f'DATABASE_{current_datetime.strftime(r"%Y%m%d_%H%M%S%f")}.txt'
+        
         # create text file from path
         Path.mkdir(text_file_path.parent, exist_ok=True)
 
         # open text file and write to file
-        with open(text_file_path, 'w') as database:
-            current_datetime = datetime.now().strftime(r'%Y-%m-%d %H:%M:%S')
-            database.write(f'DATABASE (created on {current_datetime})\n')
+        with open(text_file_path, 'w') as file:
+            file.write(f'DATABASE (created on {current_datetime.strftime(r"%Y-%m-%d %H:%M:%S")})\n')
 
             # get total data
             total_data = sum(len(dataset) for dataset in self.categorized_data.values())
-            database.write(f'Total data: {total_data}\n\n')
+            file.write(f'Total data: {total_data}\n\n')
 
             for category, dataset in self.categorized_data.items():
-                database.write(f"{category} ({len(dataset)} total):\n")
+                file.write(f"{category} ({len(dataset)} total):\n")
                 
                 for data in dataset:
-                    database.write(f"\t{data}\n")
+                    file.write(f"\t{data}\n")
                 
-                database.write('\n')
+                file.write('\n')
