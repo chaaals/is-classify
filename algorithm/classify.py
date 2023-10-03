@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 import re
 from utils.format_name import format_name
 
@@ -94,9 +95,58 @@ class Classify:
         """
         Print categorized data to the terminal
         """
-        for category, values in self.categorized_data.items():
+        # print raw data by file
+        for i, dataset in enumerate(self.get_raw_data()):
+            print(f"--------file_{i+1}--------")
+            print(f"{dataset}\n")
+
+        # print found redundant data
+        print(f"------redundant_data------")
+        for data, times_repeated in self.get_redundant_data().items():
+            print(f"'{data}' was repeated {times_repeated} time", end='')
+
+            # 1 time, 2 times, 3 times, ..., n times
+            if times_repeated > 1:
+                print("s")
+
+        # print categorized data
+        print(f"-----categorized_data-----")
+        self.categorize_data()
+
+        for category, dataset in self.get_categorized_data().items():
             print(f"{category}:")
-            for value in values:
-                print(f"  {value}")
+            print(dataset)
+            print('\n')
 
         return self
+
+    def export_categorized_data(self):
+        """
+        write the categorized database to a text file
+        the export path will always be a text file under "categorized_database" directory in the same directory as the data_set files
+
+        data/
+        |___ data_set.txt files...
+        |___ categorized_database/
+            |___DATABASE.txt
+        """
+        text_file_path = self.dir / 'categorized_database' / f'DATABASE.txt'
+        # create text file from path
+        Path.mkdir(text_file_path.parent, exist_ok=True)
+
+        # open text file and write to file
+        with open(text_file_path, 'w') as database:
+            current_datetime = datetime.now().strftime(r'%Y-%m-%d %H:%M:%S')
+            database.write(f'DATABASE (created on {current_datetime})\n')
+
+            # get total data
+            total_data = sum(len(dataset) for dataset in self.categorized_data.values())
+            database.write(f'Total data: {total_data}\n\n')
+
+            for category, dataset in self.categorized_data.items():
+                database.write(f"{category} ({len(dataset)} total):\n")
+                
+                for data in dataset:
+                    database.write(f"\t{data}\n")
+                
+                database.write('\n')
