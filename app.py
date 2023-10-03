@@ -35,18 +35,17 @@ def print_to_terminal(classify: Classify):
    " print_to_terminal(classify)
     "write_to_file(classify)
 
-def write_to_file(classify: Classify, output_file_path: str):
+def write_to_file(classify: Classify):
+    output_file_path = Path(__file__).parent / 'output.txt'  # Output file path in the same directory as the script
     with open(output_file_path, 'w') as output_file:
-        for category, data_set in print_to_text.items():
-            output_file.write(f "(category)/n")
+        for category, data_set in print_to_txt.items():
+            output_file.write(f"{category}\n")
             for data in data_set:
-                output_file.write(f"{data}/n")
-                
+                output_file.write(f"     {data}\n")
+
 if __name__ == '__main__':
     DATA_DIR = Path(__file__).parent / 'data'
     classify = Classify(DATA_DIR)
 
-    output_file_path = 'output.txt' #specify the desired output file path
-
     print_to_terminal(classify)
-    write_to_file(classify, output_file_path)
+    write_to_file(classify)
