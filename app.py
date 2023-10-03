@@ -36,7 +36,7 @@ def print_to_terminal(classify: Classify):
     "write_to_file(classify)
 
 def write_to_file(classify: Classify):
-    output_file_path = Path(__file__).parent / 'output.txt'
+    output_file_path = Path(__file__).parent / 'DATABASE.txt'
     with open(output_file_path, 'w') as output_file:
         print_to_txt = classify.get_categorized_data() #hopefully gumana gomenasaiiii
         for category, data_set in print_to_txt.items():
