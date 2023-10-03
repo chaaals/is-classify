@@ -84,7 +84,7 @@ class Classify:
 
         return self
     
-    def get_categorized_data(self):
+    def get_categorized_data(self) -> dict[str:set]:
         """
         Getter function for categorized data
         """
