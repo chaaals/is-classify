@@ -25,12 +25,28 @@ def print_to_terminal(classify: Classify):
         print(dataset)
         print('\n')
 
-def write_to_file(classify: Classify):
-    pass
+"def write_to_file(classify: Classify):
+ "   pass
 
+"if __name__ == '__main__':
+ "   DATA_DIR = Path(__file__).parent / 'data'
+  "  classify = Classify(DATA_DIR)
+
+   " print_to_terminal(classify)
+    "write_to_file(classify)
+
+def write_to_file(classify: Classify, output_file_path: str):
+    with open(output_file_path, 'w') as output_file:
+        for category, data_set in print_to_text.items():
+            output_file.write(f "(category)/n")
+            for data in data_set:
+                output_file.write(f"{data}/n")
+                
 if __name__ == '__main__':
     DATA_DIR = Path(__file__).parent / 'data'
     classify = Classify(DATA_DIR)
 
+    output_file_path = 'output.txt' #specify the desired output file path
+
     print_to_terminal(classify)
-    write_to_file(classify)
+    write_to_file(classify, output_file_path)
