@@ -27,25 +27,29 @@ def print_to_terminal(classify: Classify):
         print('\n')
 
 def write_to_file(classify: Classify):
-    # Buo ang output file path na DATABASE.txt
-    output_file_path = Path(__file__).parent / 'data' / 'categorized_database' / 'DATABASE.txt'
+    # get categorized data
+    categorized_data = classify.get_categorized_data()
 
-    with open(output_file_path, 'w') as f:
-        # Isulat ang petsa at oras sa header ng DATABASE
-        current_datetime = datetime.now()
-        formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-        f.write(f"DATABASE (created on {formatted_datetime})\n")
+    # create text file from path
+    text_file_path = Path(__file__).parent / 'data' / 'categorized_database' / f'DATABASE.txt'
+    Path.mkdir(text_file_path.parent, exist_ok=True)
 
-        for category, dataset in classify.get_categorized_data().items():
-            # Isulat ang kategorya
-            f.write(f"{category}:\n")
+    # open text file and write to file
+    with open(text_file_path, 'w') as database:
+        current_datetime = datetime.now().strftime(r'%Y-%m-%d %H:%M:%S')
+        database.write(f'DATABASE (created on {current_datetime})\n')
 
-            # Isulat ang dataset
-            for data in dataset:
-                f.write(f"\t{data}\n")
+        # get total data
+        total_data = sum(len(dataset) for dataset in categorized_data.values())
+        database.write(f'Total data: {total_data}\n\n')
+
+        for category, dataset in categorized_data.items():
+            database.write(f"{category} ({len(dataset)} total):\n")
             
-            # Magdagdag ng newline pagkatapos ng dataset
-            f.write('\n')
+            for data in dataset:
+                database.write(f"\t{data}\n")
+            
+            database.write('\n')
 
 if __name__ == '__main__':
     DATA_DIR = Path(__file__).parent / 'data'
