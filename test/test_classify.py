@@ -6,7 +6,11 @@ from algorithm.classify import Classify
 # generates a path for test data directory
 TEST_DATA_DIR = Path(__file__).parent.joinpath("test_data")
 SYSTEM = platform.system()
+
 classify = Classify(TEST_DATA_DIR)
+
+# categorize raw data
+classify.categorize_data()
 
 class ClassifyUnitTest(unittest.TestCase):
     # should successfully create a list of sets containing clean raw data from txt files on Windows OS
@@ -68,33 +72,6 @@ class ClassifyUnitTest(unittest.TestCase):
                 "+63-9182232234",
                 "+63-9906300018",
                 "Destiny Stewart"
-            },
-            {
-                "+63-9519818150",
-                "+63-9174922783",
-                "2007-04-18",
-                "+63-9925222700",
-                "+63-9705067052",
-                "+63-9972566544",
-                "reedlee@example.org",
-                "2010-12-06",
-                "Mario Anderson",
-                "Jordan Yoder",
-                "+63-9278087484",
-                "hcruz@example.com",
-                "Christina Swanson",
-                "+63-9083717947",
-                "Thomas Daniels",
-                "John Williams",
-                "Elizabeth Moore",
-                "Jasmine Myers",
-                "2023-07-03",
-                "2015-02-25",
-                "Andrea Smith",
-                "1986-04-08",
-                "william36@example.org",
-                "+63-9919175150",
-                "2015-07-11",
             }
         ])
 
@@ -130,33 +107,6 @@ class ClassifyUnitTest(unittest.TestCase):
                 "+63-9182232234",
                 "+63-9906300018",
                 "Destiny Stewart"
-            },
-            {
-                "+63-9519818150",
-                "+63-9174922783",
-                "2007-04-18",
-                "+63-9925222700",
-                "+63-9705067052",
-                "+63-9972566544",
-                "reedlee@example.org",
-                "2010-12-06",
-                "Mario Anderson",
-                "Jordan Yoder",
-                "+63-9278087484",
-                "hcruz@example.com",
-                "Christina Swanson",
-                "+63-9083717947",
-                "Thomas Daniels",
-                "John Williams",
-                "Elizabeth Moore",
-                "Jasmine Myers",
-                "2023-07-03",
-                "2015-02-25",
-                "Andrea Smith",
-                "1986-04-08",
-                "william36@example.org",
-                "+63-9919175150",
-                "2015-07-11",
             },
             {
                 "2016-03-22",
@@ -204,9 +154,15 @@ class ClassifyUnitTest(unittest.TestCase):
 
     # should print out the categorized data
     def test_print_categorized_data(self):
-        classify.categorize_data()
         print("Categorized Data:")
         classify.print_categorized_data()
+
+    # should categorize data based on name, birthday, email, and cell_no
+    def test_categorized_data(self):
+        categorized_data = classify.get_categorized_data()
+
+        for data_set in categorized_data.values():
+            self.assertGreater(len(data_set), 0, 'Set is greater than zero')
     
 if __name__ == '__main__':
     unittest.main()
