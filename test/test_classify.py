@@ -195,6 +195,12 @@ class ClassifyUnitTest(unittest.TestCase):
 
         categorized_data = classify_by.get_categorized_data()
         self.assertEqual(len(categorized_data['test3']), 0)
+
+    def test_export_error(self):
+        classify = Classify(TEST_DATA_DIR)
+        
+        with self.assertWarns(UserWarning):
+            classify.export()
     
 if __name__ == '__main__':
     unittest.main()

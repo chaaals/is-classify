@@ -1,5 +1,6 @@
 from pathlib import Path
 from datetime import datetime
+from warnings import warn
 from re import compile
 
 from utils.validate_regex import is_valid_regex
@@ -151,7 +152,7 @@ class Classify:
 
         return self
 
-    def export_categorized_data(self):
+    def export(self):
         """
         write the categorized database to a text file
         the export path will always be a text file under "categorized_database" directory in the same directory as the data_set files
@@ -161,12 +162,14 @@ class Classify:
         |___ categorized_database/
             |___DATABASE.txt
         """
+        # warn the user that categorized data cannot be exported while empty
         if self.categorized_data is None:
-            return self
+            return warn('Cannot export empty categorized data. Call categorize_data or categorize_data_by before exporting.')
         
         # get current datetime for filename and writing timestamp on DATABASE_current_datetime.txt
         current_datetime = datetime.now()
-        text_file_path = self.dir / 'categorized_database' / f'DATABASE_{current_datetime.strftime(r"%Y%m%d_%H%M%S%f")}.txt'
+        file_name = f'DATABASE_{current_datetime.strftime(r"%Y%m%d_%H%M%S%f")}.txt'
+        text_file_path = self.dir / 'categorized_database' / file_name
         
         # create text file from path
         Path.mkdir(text_file_path.parent, exist_ok=True)
@@ -186,3 +189,5 @@ class Classify:
                     file.write(f"\t{data}\n")
                 
                 file.write('\n')
+
+        print(f"Successfully exported categorized data on file {file_name}")
