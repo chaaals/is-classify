@@ -84,17 +84,16 @@ class Classify:
         birthday_regex = compile(r'^\d{4}-\d{2}-\d{2}$')
         email_regex = compile(r'^.+@.+\..{2,}$')
         
-        for data_set in self.raw_data:
-            for value in data_set:
-                if cell_no_regex.match(value):
-                    init_categorized_data["cell_no"].add(value)
-                elif birthday_regex.match(value):
-                    init_categorized_data["birthday"].add(value)
-                elif email_regex.match(value):
-                    init_categorized_data["email"].add(value)
-                else:
-                    formatted_name = format_name(value)
-                    init_categorized_data["name"].add(formatted_name)
+        for value in self.aggregated_raw_data:
+            if cell_no_regex.match(value):
+                init_categorized_data["cell_no"].add(value)
+            elif birthday_regex.match(value):
+                init_categorized_data["birthday"].add(value)
+            elif email_regex.match(value):
+                init_categorized_data["email"].add(value)
+            else:
+                formatted_name = format_name(value)
+                init_categorized_data["name"].add(formatted_name)
 
         self.categorized_data = init_categorized_data
         return self
