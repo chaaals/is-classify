@@ -1,5 +1,6 @@
 import unittest
 import platform
+import re
 from pathlib import Path
 from algorithm.classify import Classify
 
@@ -158,9 +159,23 @@ class ClassifyUnitTest(unittest.TestCase):
         classify.print_categorized_data()
 
     # should categorize data based on name, birthday, email, and cell_no
-    def test_categorized_data(self):
+    def test_categorize_data(self):
         categorized_data = classify.get_categorized_data()
 
+        for data_set in categorized_data.values():
+            self.assertGreater(len(data_set), 0, 'Set is greater than zero')
+
+    def test_categorize_data_by(self):
+        classify_by = Classify(TEST_DATA_DIR)
+        classify_by.categorize_data_by({
+            "name": r'^[A-Z][a-zA-Z]*(?:\s[A-Z][a-zA-Z]*){1,2}$',
+            "cell_no": r'^\+63-\d{10}$',
+            "birthday": r'^\d{4}-\d{2}-\d{2}$',
+            "email": r'^.+@.+\..{2,}$',
+            "test": None
+        })
+
+        categorized_data = classify_by.get_categorized_data()
         for data_set in categorized_data.values():
             self.assertGreater(len(data_set), 0, 'Set is greater than zero')
     
