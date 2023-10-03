@@ -1,10 +1,8 @@
-import os
+from pathlib import Path
 from algorithm.classify import Classify
 
-
 if __name__ == '__main__':
-    DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
-
+    DATA_DIR = Path(__file__).parent / 'data'
     classify = Classify(DATA_DIR)
-    print(*classify.get_raw_data(), sep='\n\n')
-    print(classify.get_redundant_data())
+    classify.print_categorized_data()
+    classify.export_categorized_data()
