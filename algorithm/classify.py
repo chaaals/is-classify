@@ -99,14 +99,17 @@ class Classify:
         return self
     
     def categorize_data_by(self, patterns: dict):
+        """
+        Categorize the raw data based on user input category and regex
+        """
+        # initialize a categorized data dictionary
         init_categorized_data = { key:set() for key in patterns if is_valid_regex(patterns[key]) }
         
+        # loop through the aggregated raw data
         for value in self.aggregated_raw_data:
+            # loop through the keys and check if any of them are a match
             for key in init_categorized_data:
                 if compile(patterns[key]).match(value):
-                    if key == 'name':
-                       value = format_name(value)
-
                     init_categorized_data[key].add(value)
 
         self.categorized_data = init_categorized_data

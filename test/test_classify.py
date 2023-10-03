@@ -154,9 +154,9 @@ class ClassifyUnitTest(unittest.TestCase):
             Classify(TEST_DATA_DIR.joinpath('/data_set_471.txt'))
 
     # should print out the categorized data
-    def test_print_categorized_data(self):
-        print("Categorized Data:")
-        classify.print_categorized_data()
+    # def test_print_categorized_data(self):
+    #     print("Categorized Data:")
+    #     classify.print_categorized_data()
 
     # should categorize data based on name, birthday, email, and cell_no
     def test_categorize_data(self):
@@ -165,19 +165,36 @@ class ClassifyUnitTest(unittest.TestCase):
         for data_set in categorized_data.values():
             self.assertGreater(len(data_set), 0, 'Set is greater than zero')
 
+    # should categorize raw data by user input category and regex
     def test_categorize_data_by(self):
         classify_by = Classify(TEST_DATA_DIR)
         classify_by.categorize_data_by({
-            "name": r'^[A-Z][a-zA-Z]*(?:\s[A-Z][a-zA-Z]*){1,2}$',
-            "cell_no": r'^\+63-\d{10}$',
-            "birthday": r'^\d{4}-\d{2}-\d{2}$',
-            "email": r'^.+@.+\..{2,}$',
-            "test": None
+            "name2": r'^[A-Z][a-zA-Z]*(?:\s[A-Z][a-zA-Z]*){1,2}$',
+            "cell_no2": r'^\+63-\d{10}$',
+            "birthday2": r'^\d{4}-\d{2}-\d{2}$',
+            "email2": r'^.+@.+\..{2,}$',
+            "test": None,
+            "test2": 123
         })
 
         categorized_data = classify_by.get_categorized_data()
+        classify_by.print_categorized_data()
         for data_set in categorized_data.values():
             self.assertGreater(len(data_set), 0, 'Set is greater than zero')
+
+    # should have an empty set for invalid regex or no matching regex
+    def test_categorize_data_by_error(self):
+        classify_by = Classify(TEST_DATA_DIR)
+        classify_by.categorize_data_by({
+            "name2": r'^[A-Z][a-zA-Z]*(?:\s[A-Z][a-zA-Z]*){1,2}$',
+            "cell_no2": r'^\+63-\d{10}$',
+            "birthday2": r'^\d{4}-\d{2}-\d{2}$',
+            "email2": r'^.+@.+\..{2,}$',
+            "test3": 'asdgasdgs'
+        })
+
+        categorized_data = classify_by.get_categorized_data()
+        self.assertEqual(len(categorized_data['test3']), 0)
     
 if __name__ == '__main__':
     unittest.main()
