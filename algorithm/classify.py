@@ -12,7 +12,7 @@ class Classify:
         self.aggregated_raw_data = set()
 
         self.redundant_data = {}
-        self.unmatched_data = set()
+        self.unmatched_data = None
         self.categorized_data = None
 
         # checks if the path exists before reading data sets
@@ -82,6 +82,8 @@ class Classify:
             "cell_no": set(),
         }
 
+        init_unmatched_data = set()
+
         for data in self.aggregated_raw_data:
             if UserInfo.CELL_NO_REGEXP.match(data):
                 init_categorized_data['cell_no'].add(data)
@@ -93,10 +95,13 @@ class Classify:
                 formatted_name = format_name(data)
                 init_categorized_data['name'].add(formatted_name)
             else:
-                self.unmatched_data.add(data)
+                init_unmatched_data.add(data)
         
-        self.categorized_data = init_categorized_data
+        if len(init_unmatched_data) > 0:
+            self.unmatched_data = init_unmatched_data
 
+        self.categorized_data = init_categorized_data
+        
         return self
     
     def get_categorized_data(self) -> dict[str:set]:
@@ -131,6 +136,10 @@ class Classify:
                 print(f"{category}:")
                 print(dataset)
                 print('\n')
+
+        if self.unmatched_data is not None:
+            print(f"------unmatched_data------")
+            print(self.unmatched_data)
 
         return self
 
