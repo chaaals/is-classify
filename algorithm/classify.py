@@ -12,6 +12,7 @@ class Classify:
         self.aggregated_raw_data = set()
 
         self.redundant_data = {}
+        self.unmatched_data = set()
         self.categorized_data = None
 
         # checks if the path exists before reading data sets
@@ -84,13 +85,15 @@ class Classify:
         for data in self.aggregated_raw_data:
             if UserInfo.CELL_NO_REGEXP.match(data):
                 init_categorized_data['cell_no'].add(data)
-            elif UserInfo.BIRTHDAY_REGEXP.match(data):
+            elif UserInfo.BIRTHDAY_REGEXP.match(data) and UserInfo.is_valid_birthday(data):
                 init_categorized_data['birthday'].add(data)
             elif UserInfo.EMAIL_REGEXP.match(data):
                 init_categorized_data['email'].add(data)
             elif UserInfo.NAME_REGEXP.match(data):
                 formatted_name = format_name(data)
                 init_categorized_data['name'].add(formatted_name)
+            else:
+                self.unmatched_data.add(data)
         
         self.categorize_data = init_categorized_data
 
