@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import datetime
-import re
 
+from warnings import warn
 from constants.user_info import UserInfo
 from utils.format_name import format_name
 
@@ -73,8 +73,6 @@ class Classify:
         """
         Categorize the raw data into "name," "email," "birthday," and "cell_no" lists.
         """
-        if self.categorize_data is not None:
-            return self
         
         init_categorized_data = {
             "name": set(),
@@ -123,13 +121,13 @@ class Classify:
                 print("s")
 
         # print categorized data
-        print(f"-----categorized_data-----")
-        self.categorize_data()
+        if self.categorized_data is not None:
+            print(f"-----categorized_data-----")
 
-        for category, dataset in self.get_categorized_data().items():
-            print(f"{category}:")
-            print(dataset)
-            print('\n')
+            for category, dataset in self.get_categorized_data().items():
+                print(f"{category}:")
+                print(dataset)
+                print('\n')
 
         return self
 
@@ -143,6 +141,10 @@ class Classify:
         |___ categorized_database/
             |___DATABASE.txt
         """
+        if self.categorize_data is None:
+            warn(f'Cannot export categorized_data typeof {type(self.categorized_data)}. Call categorize_data() method first.')
+            return self
+    
         # get current datetime for filename and writing timestamp on DATABASE_current_datetime.txt
         current_datetime = datetime.now()
         text_file_path = self.dir / 'categorized_database' / f'DATABASE_{current_datetime.strftime(r"%Y%m%d_%H%M%S%f")}.txt'
