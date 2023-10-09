@@ -13,6 +13,7 @@ class DateFormatsEnum(Enum):
     YYYY_DD_MM = '%Y-%m-%d'
     S_YYYY_MM_DD = '%Y/%m/%d'
     S_YYYY_DD_MM = '%Y/%m/%d'
+    INVALID_DF = '%Y%m%d'
 
 DATE_FORMATS = [
     DateFormatsEnum.MM_DD_YYYY.value,
@@ -27,4 +28,5 @@ DATE_FORMATS = [
     DateFormatsEnum.YYYY_DD_MM.value,
     DateFormatsEnum.S_YYYY_MM_DD.value,
     DateFormatsEnum.S_YYYY_DD_MM.value,
+    DateFormatsEnum.INVALID_DF.value
 ]
