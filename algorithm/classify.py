@@ -1,23 +1,23 @@
 from pathlib import Path
 from datetime import datetime
 import re
+
+from constants.user_info import UserInfo
 from utils.format_name import format_name
 
 class Classify:
     def __init__(self, dir: Path):
         self.dir = dir
         self.raw_data = [] # array of sets
+        self.aggregated_raw_data = set()
+
         self.redundant_data = {}
-        self.categorized_data = { # array of sets for categorize_data
-            "name": set(),
-            "birthday": set(),
-            "email": set(),
-            "cell_no": set(),
-        }
+        self.categorized_data = None
 
         # checks if the path exists before reading data sets
         if(dir.is_dir()):
             self.__read_data_sets()
+            self.__aggregate_raw_data()
         else:
             raise ValueError('Argument must be a valid directory.')
 
@@ -49,6 +49,14 @@ class Classify:
             self.raw_data.append(file_data)
         return self
     
+    def __aggregate_raw_data(self):
+        """
+        Aggregates raw data to a set
+        """
+        for data in self.raw_data:
+            self.aggregated_raw_data.update(data)
+        return self
+    
     def get_raw_data(self) -> list[set]:
         """
         Getter fn for raw data
@@ -65,23 +73,28 @@ class Classify:
         """
         Categorize the raw data into "name," "email," "birthday," and "cell_no" lists.
         """
+        if self.categorize_data is not None:
+            return self
+        
+        init_categorized_data = {
+            "name": set(),
+            "birthday": set(),
+            "email": set(),
+            "cell_no": set(),
+        }
 
-        # Regex for cell numbers, birthdays, and emails
-        cell_no_regex = re.compile(r'^\+63-\d{10}$')
-        birthday_regex = re.compile(r'^\d{4}-\d{2}-\d{2}$')
-        email_regex = re.compile(r'^.+@.+\..{2,}$')
-
-        for data_set in self.raw_data:
-            for value in data_set:
-                if cell_no_regex.match(value):
-                    self.categorized_data["cell_no"].add(value)
-                elif birthday_regex.match(value):
-                    self.categorized_data["birthday"].add(value)
-                elif email_regex.match(value):
-                    self.categorized_data["email"].add(value)
-                else:
-                    formatted_name = format_name(value)
-                    self.categorized_data["name"].add(formatted_name)
+        for data in self.aggregated_raw_data:
+            if UserInfo.CELL_NO_REGEXP.match(data):
+                init_categorized_data['cell_no'].add(data)
+            elif UserInfo.BIRTHDAY_REGEXP.match(data):
+                init_categorized_data['birthday'].add(data)
+            elif UserInfo.EMAIL_REGEXP.match(data):
+                init_categorized_data['email'].add(data)
+            elif UserInfo.NAME_REGEXP.match(data):
+                formatted_name = format_name(data)
+                init_categorized_data['name'].add(formatted_name)
+        
+        self.categorize_data = init_categorized_data
 
         return self
     
