@@ -1,5 +1,6 @@
 from faker import Faker
 from random import randint
+from constants.date_formats import DATE_FORMATS
 
 # read command line args
 from sys import argv
@@ -21,7 +22,8 @@ def generate_dataset(fake: Faker, length: int) -> None:
                 file.write(f"{fake.email()}\n")
 
             elif(rand == 3):
-                file.write(f"{fake.date()}\n")
+                i = randint(0, len(DATE_FORMATS) - 1)
+                file.write(f"{fake.date_time().strftime(DATE_FORMATS[i])}\n")
 
             elif(rand == 4):
                 file.write(f"+63-9{fake.msisdn()[4:]}\n")
