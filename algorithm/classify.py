@@ -95,7 +95,7 @@ class Classify:
             else:
                 self.unmatched_data.add(data)
         
-        self.categorize_data = init_categorized_data
+        self.categorized_data = init_categorized_data
 
         return self
     
@@ -134,7 +134,7 @@ class Classify:
 
         return self
 
-    def export_categorized_data(self):
+    def export(self):
         """
         write the categorized database to a text file
         the export path will always be a text file under "categorized_database" directory in the same directory as the data_set files
