@@ -7,9 +7,6 @@ class UserInfo:
     BIRTHDAY_REGEXP = compile(r'\d{2}[-/]\d{2}[-/]\d{4}|[A-Z][a-z]+\s\d{2},\s\d{4}|\d{2}\s[A-Z][a-z]+,\s\d{4}|\d{4}[-/]\d{2}[-/]\d{2}')
     CELL_NO_REGEXP = compile(r'^\+63-\d{10}$')
     EMAIL_REGEXP = compile(r'^.+@.+\..{2,}$')
-
-    def is_valid_name(self) -> bool | None:
-        return self
     
     def is_valid_birthday(date: str) -> bool | None:
         try:

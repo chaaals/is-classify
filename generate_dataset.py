@@ -19,7 +19,9 @@ def generate_dataset(fake: Faker, length: int) -> None:
                 file.write(f"{fake.first_name()} {fake.last_name_female()} {fake.last_name_male()}\n")
 
             elif(rand == 2):
-                file.write(f"{fake.email()}\n")
+                fake_emails = [fake.ascii_email(), fake.ascii_company_email(), fake.ascii_free_email(), fake.email()]
+                i = randint(0, len(fake_emails) - 1)
+                file.write(f"{fake_emails[i]}\n")
 
             elif(rand == 3):
                 i = randint(0, len(DATE_FORMATS) - 1)
