@@ -17,7 +17,7 @@ class ClassifyUnitTest(unittest.TestCase):
         [
             {
                 "2016-03-22",
-                "blakebennett@example.org",
+                "blake_bennett@example.co.uk",
                 "2001-11-25",
                 "Paige Obrien",
                 "+63-9529763557",
@@ -106,7 +106,7 @@ class ClassifyUnitTest(unittest.TestCase):
             },
             {
                 "2016-03-22",
-                "blakebennett@example.org",
+                "blake_bennett@example.co.uk",
                 "2001-11-25",
                 "Paige Obrien",
                 "+63-9529763557",
