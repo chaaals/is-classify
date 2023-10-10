@@ -25,10 +25,10 @@ class ClassifyUnitTest(unittest.TestCase):
                 "michael09@example.org",
                 "2007-09-08",
                 "Kendra Taylor",
-                "+63-9282873428",
+                "63-9282873428",
                 "Antonio Castillo",
                 "Robert Mcintyre",
-                "+63-9282873428",
+                "63-9282873428",
                 "2019-02-05",
                 "carlmcintyre@example.org",
                 "Michael Graham",
@@ -37,9 +37,9 @@ class ClassifyUnitTest(unittest.TestCase):
                 "1993-08-20",
                 "2019-02-05",
                 "Brooke Huang",
-                "+63-9781474972",
+                "639781474972",
                 "David Wallace",
-                "+63-9143480987",
+                "09143480987",
                 "mathewsjessica@example.net"
             },
             {
@@ -48,10 +48,10 @@ class ClassifyUnitTest(unittest.TestCase):
                 "dustinwilcox@example.org",
                 "23 June, 1988",
                 "Maria Tran Marquez",
-                "+63-9385943899",
+                "63-9385943899",
                 "aimeelogan@example.org",
-                "+63-9246610416",
-                "+63-9624060793",
+                "639246610416",
+                "09624060793",
                 "Stacy Morton Hurley",
                 "+63-9084021344",
                 "Denise Moss Allen",
@@ -83,10 +83,10 @@ class ClassifyUnitTest(unittest.TestCase):
                 "dustinwilcox@example.org",
                 "23 June, 1988",
                 "Maria Tran Marquez",
-                "+63-9385943899",
+                "63-9385943899",
                 "aimeelogan@example.org",
-                "+63-9246610416",
-                "+63-9624060793",
+                "639246610416",
+                "09624060793",
                 "Stacy Morton Hurley",
                 "+63-9084021344",
                 "Denise Moss Allen",
@@ -114,10 +114,10 @@ class ClassifyUnitTest(unittest.TestCase):
                 "michael09@example.org",
                 "2007-09-08",
                 "Kendra Taylor",
-                "+63-9282873428",
+                "63-9282873428",
                 "Antonio Castillo",
                 "Robert Mcintyre",
-                "+63-9282873428",
+                "63-9282873428",
                 "2019-02-05",
                 "carlmcintyre@example.org",
                 "Michael Graham",
@@ -126,9 +126,9 @@ class ClassifyUnitTest(unittest.TestCase):
                 "1993-08-20",
                 "2019-02-05",
                 "Brooke Huang",
-                "+63-9781474972",
+                "639781474972",
                 "David Wallace",
-                "+63-9143480987",
+                "09143480987",
                 "mathewsjessica@example.net"
             }
         ])
@@ -137,7 +137,7 @@ class ClassifyUnitTest(unittest.TestCase):
     # should count the redundant data in txt file
     def test_redundant_data(self):
         self.assertDictEqual(classify.get_redundant_data(), {
-            "+63-9282873428": 1,
+            "63-9282873428": 1,
             "2019-02-05": 1,
         })
 
