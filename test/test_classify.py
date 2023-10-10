@@ -30,10 +30,10 @@ class ClassifyUnitTest(unittest.TestCase):
                 "michael09@example.org",
                 "2007-09-08",
                 "Kendra Taylor",
-                "+63-9282873428",
+                "63-9282873428",
                 "Antonio Castillo",
                 "Robert Mcintyre",
-                "+63-9282873428",
+                "63-9282873428",
                 "2019-02-05",
                 "carlmcintyre@example.org",
                 "Michael Graham",
@@ -42,9 +42,9 @@ class ClassifyUnitTest(unittest.TestCase):
                 "1993-08-20",
                 "2019-02-05",
                 "Brooke Huang",
-                "+63-9781474972",
+                "09781474972",
                 "David Wallace",
-                "+63-9143480987",
+                "639143480987",
                 "mathewsjessica@example.net"
             },
             {
@@ -69,9 +69,9 @@ class ClassifyUnitTest(unittest.TestCase):
                 "jenniferfreeman@example.com",
                 "estewart@example.com",
                 "+63-9637653230",
-                "+63-9869682919",
-                "+63-9182232234",
-                "+63-9906300018",
+                "63-9869682919",
+                "639182232234",
+                "09906300018",
                 "Destiny Stewart"
             }
         ])
@@ -104,9 +104,9 @@ class ClassifyUnitTest(unittest.TestCase):
                 "jenniferfreeman@example.com",
                 "estewart@example.com",
                 "+63-9637653230",
-                "+63-9869682919",
-                "+63-9182232234",
-                "+63-9906300018",
+                "63-9869682919",
+                "639182232234",
+                "09906300018",
                 "Destiny Stewart"
             },
             {
@@ -119,10 +119,10 @@ class ClassifyUnitTest(unittest.TestCase):
                 "michael09@example.org",
                 "2007-09-08",
                 "Kendra Taylor",
-                "+63-9282873428",
+                "63-9282873428",
                 "Antonio Castillo",
                 "Robert Mcintyre",
-                "+63-9282873428",
+                "63-9282873428",
                 "2019-02-05",
                 "carlmcintyre@example.org",
                 "Michael Graham",
@@ -131,9 +131,9 @@ class ClassifyUnitTest(unittest.TestCase):
                 "1993-08-20",
                 "2019-02-05",
                 "Brooke Huang",
-                "+63-9781474972",
+                "09781474972",
                 "David Wallace",
-                "+63-9143480987",
+                "639143480987",
                 "mathewsjessica@example.net"
             }
         ])
@@ -142,7 +142,7 @@ class ClassifyUnitTest(unittest.TestCase):
     # should count the redundant data in txt file
     def test_redundant_data(self):
         self.assertDictEqual(classify.get_redundant_data(), {
-            "+63-9282873428": 1,
+            "63-9282873428": 1,
             "2019-02-05": 1,
             "Stephanie Estrada": 1,
             "Destiny Stewart": 1
@@ -170,7 +170,7 @@ class ClassifyUnitTest(unittest.TestCase):
         classify_by = Classify(TEST_DATA_DIR)
         classify_by.categorize_data_by({
             "name2": r'^[A-Z][a-zA-Z]*(?:\s[A-Z][a-zA-Z]*){1,2}$',
-            "cell_no2": r'^\+63-\d{10}$',
+            "cell_no2": r'^(0\d{10}|(?:\+63|63)(?:-\d{10}|\d{10}))$',
             "birthday2": r'^\d{4}-\d{2}-\d{2}$',
             "email2": r'^.+@.+\..{2,}$',
             "test": None,
@@ -187,7 +187,7 @@ class ClassifyUnitTest(unittest.TestCase):
         classify_by = Classify(TEST_DATA_DIR)
         classify_by.categorize_data_by({
             "name2": r'^[A-Z][a-zA-Z]*(?:\s[A-Z][a-zA-Z]*){1,2}$',
-            "cell_no2": r'^\+63-\d{10}$',
+            "cell_no2": r'^(0\d{10}|(?:\+63|63)(?:-\d{10}|\d{10}))$',
             "birthday2": r'^\d{4}-\d{2}-\d{2}$',
             "email2": r'^.+@.+\..{2,}$',
             "test3": 'asdgasdgs'

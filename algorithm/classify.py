@@ -80,7 +80,7 @@ class Classify:
         }
 
         # Regex for cell numbers, birthdays, and emails
-        cell_no_regex = compile(r'^\+63-\d{10}$')
+        cell_no_regex = compile(r'^(0\d{10}|(?:\+63|63)(?:-\d{10}|\d{10}))$')
         birthday_regex = compile(r'^\d{4}-\d{2}-\d{2}$')
         email_regex = compile(r'^.+@.+\..{2,}$')
         
