@@ -1,23 +1,24 @@
 from pathlib import Path
 from datetime import datetime
-import re
+
+from warnings import warn
+from constants.user_info import UserInfo
 from utils.format_name import format_name
 
 class Classify:
     def __init__(self, dir: Path):
         self.dir = dir
         self.raw_data = [] # array of sets
+        self.aggregated_raw_data = set()
+
         self.redundant_data = {}
-        self.categorized_data = { # array of sets for categorize_data
-            "name": set(),
-            "birthday": set(),
-            "email": set(),
-            "cell_no": set(),
-        }
+        self.unmatched_data = None
+        self.categorized_data = None
 
         # checks if the path exists before reading data sets
         if(dir.is_dir()):
             self.__read_data_sets()
+            self.__aggregate_raw_data()
         else:
             raise ValueError('Argument must be a valid directory.')
 
@@ -49,6 +50,14 @@ class Classify:
             self.raw_data.append(file_data)
         return self
     
+    def __aggregate_raw_data(self):
+        """
+        Aggregates raw data to a set
+        """
+        for data in self.raw_data:
+            self.aggregated_raw_data.update(data)
+        return self
+    
     def get_raw_data(self) -> list[set]:
         """
         Getter fn for raw data
@@ -65,24 +74,34 @@ class Classify:
         """
         Categorize the raw data into "name," "email," "birthday," and "cell_no" lists.
         """
+        
+        init_categorized_data = {
+            "name": set(),
+            "birthday": set(),
+            "email": set(),
+            "cell_no": set(),
+        }
 
-        # Regex for cell numbers, birthdays, and emails
-        cell_no_regex = re.compile(r'^\+63-\d{10}$')
-        birthday_regex = re.compile(r'^\d{4}-\d{2}-\d{2}$')
-        email_regex = re.compile(r'^.+@.+\..{2,}$')
+        init_unmatched_data = set()
 
-        for data_set in self.raw_data:
-            for value in data_set:
-                if cell_no_regex.match(value):
-                    self.categorized_data["cell_no"].add(value)
-                elif birthday_regex.match(value):
-                    self.categorized_data["birthday"].add(value)
-                elif email_regex.match(value):
-                    self.categorized_data["email"].add(value)
-                else:
-                    formatted_name = format_name(value)
-                    self.categorized_data["name"].add(formatted_name)
+        for data in self.aggregated_raw_data:
+            if UserInfo.CELL_NO_REGEXP.match(data):
+                init_categorized_data['cell_no'].add(data)
+            elif UserInfo.BIRTHDAY_REGEXP.match(data) and UserInfo.is_valid_birthday(data):
+                init_categorized_data['birthday'].add(data)
+            elif UserInfo.EMAIL_REGEXP.match(data):
+                init_categorized_data['email'].add(data)
+            elif UserInfo.NAME_REGEXP.match(data):
+                formatted_name = format_name(data)
+                init_categorized_data['name'].add(formatted_name)
+            else:
+                init_unmatched_data.add(data)
+        
+        if len(init_unmatched_data) > 0:
+            self.unmatched_data = init_unmatched_data
 
+        self.categorized_data = init_categorized_data
+        
         return self
     
     def get_categorized_data(self) -> dict[str:set]:
@@ -110,17 +129,21 @@ class Classify:
                 print("s")
 
         # print categorized data
-        print(f"-----categorized_data-----")
-        self.categorize_data()
+        if self.categorized_data is not None:
+            print(f"-----categorized_data-----")
 
-        for category, dataset in self.get_categorized_data().items():
-            print(f"{category}:")
-            print(dataset)
-            print('\n')
+            for category, dataset in self.get_categorized_data().items():
+                print(f"{category}:")
+                print(dataset)
+                print('\n')
+
+        if self.unmatched_data is not None:
+            print(f"------unmatched_data------")
+            print(self.unmatched_data)
 
         return self
 
-    def export_categorized_data(self):
+    def export(self):
         """
         write the categorized database to a text file
         the export path will always be a text file under "categorized_database" directory in the same directory as the data_set files
@@ -130,6 +153,10 @@ class Classify:
         |___ categorized_database/
             |___DATABASE.txt
         """
+        if self.categorize_data is None:
+            warn(f'Cannot export categorized_data typeof {type(self.categorized_data)}. Call categorize_data() method first.')
+            return self
+    
         # get current datetime for filename and writing timestamp on DATABASE_current_datetime.txt
         current_datetime = datetime.now()
         text_file_path = self.dir / 'categorized_database' / f'DATABASE_{current_datetime.strftime(r"%Y%m%d_%H%M%S%f")}.txt'
