@@ -64,11 +64,23 @@ class Classify:
         """
         return self.raw_data
     
+    def get_aggregated_raw_data(self) -> set:
+        """
+        Getter fn for aggregated raw data
+        """
+        return self.aggregated_raw_data
+    
+    def get_unmatched_data(self) -> set | None:
+        """
+        Getter fn for unmatched data
+        """
+        return self.unmatched_data
+    
     def get_redundant_data(self) -> dict[str:int]:
         """
         Getter fn for redundant data
         """
-        return self.redundant_data
+        return self.redundant_data    
 
     def categorize_data(self):
         """
@@ -104,7 +116,7 @@ class Classify:
         
         return self
     
-    def get_categorized_data(self) -> dict[str:set]:
+    def get_categorized_data(self) -> dict[str:set] | None:
         """
         Getter function for categorized data
         """

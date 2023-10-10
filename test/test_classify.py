@@ -151,6 +151,10 @@ class ClassifyUnitTest(unittest.TestCase):
         classify.categorize_data()
         print("Categorized Data:")
         classify.print_categorized_data()
+
+    def test_get_aggregated_data(self):
+        aggregated_data = classify.get_aggregated_raw_data()
+        self.assertGreater(len(aggregated_data), 0)
     
 if __name__ == '__main__':
     unittest.main()

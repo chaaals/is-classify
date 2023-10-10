@@ -7,7 +7,34 @@ Classification Algorithm
 - Masapol, Cid (Leader)
 - Benevides, Sean Lester
 - Ching, Charles Matthew
+- Palileo, Jethro
+- Sundiam, Eidrian
 - Villanueva, Andre
+
+## Features
+
+Classify is an algorithm that categorizes raw data from data sets. Currently, it supports categorization of `name`, `birthday`, `email`, and `cell_no`.
+
+To get started, create an instance of Classify:
+
+```py
+from algorithm.classify import Classify
+
+c = Classify('< your data set directory >')
+```
+
+#### Methods
+
+By creating an instance of the Classify algorithm, it exposes these following methods to the user:
+
+- `c.get_raw_data()` -> Gets the raw data
+- `c.get_aggregated_data()` -> Gets the aggregated raw data
+- `c.get_unmatched_data()` -> Gets the unmatched data on after categorization
+- `c.get_redundant_data()` -> Gets the redundant data
+- `c.get_categorized_data()` -> Gets the categorized data
+- `c.print_categorized_data()` -> Prints the categorized data
+- `c.categorize_data()` -> Categorizes the raw data
+- `c.export()` -> Exports the categorized data in a `.txt` file
 
 ## Instructions
 
