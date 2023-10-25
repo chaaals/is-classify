@@ -10,7 +10,7 @@ class UserInfo:
     #   name: any number of any letters, numbers, and these characters: ! # $ % & ' * + - / = ? ^ _ ` { |
     #   domain: any number of any letters, numbers, a hypen, and a period
     #   topleveldomain: minimum of 2 of any letters, and a period (.net, .com, .co.uk, .plm.edu.ph)
-    EMAIL_REGEXP = compile(r"^(\w|[!]|[#]|[$]|[%]|[&]|[']|[*]|[+]|[-]|[/]|[=]|[?]|[^]|[`]|[{]|[|])+@(\w|[-]|[.])+\.(\w|[.]){2,}$")
+    EMAIL_REGEXP = compile(r"^(\w|[!#$%&'*+-/=?^`{|])+@(\w|[-.])+\.(\w|[.]){2,}$")
     
     def is_valid_birthday(date: str) -> bool | None:
         try:
